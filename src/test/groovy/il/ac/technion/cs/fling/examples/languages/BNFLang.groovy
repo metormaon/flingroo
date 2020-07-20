@@ -31,13 +31,13 @@ class BNFLang implements FluentLanguageAPI<Σ, V> {
   }
   @Override BNF BNF() {
     // @formatter:off
-    return bnf(). //
-        start(PlainBNF). //
-        derive(PlainBNF).to(bnf, start.with(Variable.class), noneOrMore(Rule)). // PlainBNF ::= start(Symbol) Rule*
-        derive(Rule).to(derive.with(Variable.class), RuleBody). // Rule ::= derive(Variable) RuleBody
-        derive(Rule).to(specialize.with(Variable.class), into.many(Variable.class)). // Rule ::= specialize(Variable) into(Variable*)
-        derive(RuleBody).to(to.many(Symbol.class), noneOrMore(RuleTail)).or(toEpsilon). // RuleBody ::= to(Symbol*) RuleTail* | toEpsilon()
-        derive(RuleTail).to(or.many(Symbol.class)).or(orNone). // RuleTail ::= or(Symbol*) | orNone()
+    return (bnf(). //
+            start(PlainBNF). //
+            derive(PlainBNF).to(bnf, start.with(Variable.class), noneOrMore(Rule)). // PlainBNF ::= start(Symbol) Rule*
+            derive(Rule).to(derive.with(Variable.class), RuleBody). // Rule ::= derive(Variable) RuleBody
+            derive(Rule).to(specialize.with(Variable.class), into.many(Variable.class)). // Rule ::= specialize(Variable) into(Variable*)
+            derive(RuleBody).to(to.many(Symbol.class), noneOrMore(RuleTail)).or(toEpsilon). // RuleBody ::= to(Symbol*) RuleTail* | toEpsilon()
+            derive(RuleTail).to(or.many(Symbol.class)) | orNone). // RuleTail ::= or(Symbol*) | orNone()
         build();
     // @formatter:on
   }
