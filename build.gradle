@@ -1,8 +1,9 @@
 plugins {
     id 'groovy'
+    id 'application'
 }
 
-group 'org.example'
+group 'il.ac.technion.cs'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -10,8 +11,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy-all:2.3.11'
-    implementation group: 'org.antlr', name: 'antlr4', version: '4.7.2'
-
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    implementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '3.0.5'//, ext: 'pom'
 }
+
