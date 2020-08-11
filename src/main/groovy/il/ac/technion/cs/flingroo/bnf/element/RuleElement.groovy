@@ -1,8 +1,4 @@
-package il.ac.technion.cs.flingroo
-
-import groovy.transform.CompileDynamic
-import groovy.transform.CompileStatic
-
+package il.ac.technion.cs.flingroo.bnf.element
 /**
  * @author Noam Rotem
  */

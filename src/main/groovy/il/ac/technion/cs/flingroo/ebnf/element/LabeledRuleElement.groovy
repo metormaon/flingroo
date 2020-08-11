@@ -1,4 +1,4 @@
-package il.ac.technion.cs.flingroo
+package il.ac.technion.cs.flingroo.ebnf.element
 
 import groovy.transform.SelfType
 

@@ -1,5 +1,4 @@
-package il.ac.technion.cs.flingroo
-
+package il.ac.technion.cs.flingroo.bnf.element
 /**
  * @author Noam Rotem
  */

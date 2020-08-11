@@ -1,8 +1,8 @@
-package examples
 
-import il.ac.technion.cs.flingroo.Terminal
-import il.ac.technion.cs.flingroo.Variable
-import il.ac.technion.cs.flingroo.BNF
+
+import il.ac.technion.cs.flingroo.bnf.element.Terminal
+import il.ac.technion.cs.flingroo.bnf.element.Variable
+import il.ac.technion.cs.flingroo.bnf.BNF
 
 import static examples.JavaBNF.V.*
 import static examples.JavaBNF.T.*
@@ -18,8 +18,8 @@ class JavaBNF {
 
     static void main(String[] args) {
         BNF grammar = BNF.bnf(CompilationUnit) {
-            CompilationUnit <- (~PackageDeclaration + ~ImportDeclarations + ~TypeDeclarations)
-            PackageDeclaration <- (PACKAGE + PackageName + T0)
+            CompilationUnit <- ~PackageDeclaration + ~ImportDeclarations + ~TypeDeclarations
+            PackageDeclaration <- PACKAGE + PackageName + T0
             ImportDeclarations <- (ImportDeclaration | ImportDeclarations + ImportDeclaration)
             ImportDeclaration <- (SingleTypeImportDeclaration | TypeImportOnDemandDeclaration)
             SingleTypeImportDeclaration <- (IMPORT + TypeName + T0)
