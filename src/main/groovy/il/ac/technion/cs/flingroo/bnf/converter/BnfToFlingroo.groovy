@@ -2,11 +2,11 @@
  * @author Noam Rotem
  */
 
-package il.ac.technion.cs.flingroo
+package il.ac.technion.cs.flingroo.bnf.converter
 
 import java.util.regex.Matcher
 
-class BNFParser {
+class BnfToFlingroo {
     final String text
     final Set<String> variables = []
     final Map<String, String> terminals = [:]
@@ -17,7 +17,7 @@ class BNFParser {
     int terminalCount = 0
     int escapeCount = 0
 
-    BNFParser(String text) {
+    BnfToFlingroo(String text) {
         this.text = text
     }
 
@@ -104,9 +104,9 @@ class BNFParser {
         """
 package examples
 
-import il.ac.technion.cs.flingroo.Terminal
-import il.ac.technion.cs.flingroo.Variable
-import il.ac.technion.cs.flingroo.BNF
+import il.ac.technion.cs.flingroo.bnf.element.Terminal
+import il.ac.technion.cs.flingroo.bnf.element.Variable
+import il.ac.technion.cs.flingroo.bnf.BNF
 
 import static examples.JavaBNF.V.*
 import static examples.JavaBNF.T.*
@@ -201,7 +201,7 @@ class JavaBNF {
         //TODO: Move resource to test resources, when gradle stops hiding it from classpath
         String fileText = ClassLoader.getSystemResource('java-bnf.txt').text
 
-        BNFParser parser = new BNFParser(fileText)
+        BnfToFlingroo parser = new BnfToFlingroo(fileText)
 
         //TODO: write to gen-test
         println(parser.bnfToFlingroo())

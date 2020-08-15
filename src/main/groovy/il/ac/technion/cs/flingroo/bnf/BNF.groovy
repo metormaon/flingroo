@@ -1,11 +1,15 @@
-package il.ac.technion.cs.flingroo
+package il.ac.technion.cs.flingroo.bnf
+
+import il.ac.technion.cs.flingroo.bnf.element.Rule
+import il.ac.technion.cs.flingroo.bnf.element.Terminal
+import il.ac.technion.cs.flingroo.bnf.element.Variable
 
 /**
  * @author Noam Rotem
  */
 
-import static il.ac.technion.cs.flingroo.BNF.V.*
-import static il.ac.technion.cs.flingroo.BNF.T.*
+import static il.ac.technion.cs.flingroo.bnf.BNF.V.*
+import static il.ac.technion.cs.flingroo.bnf.BNF.T.*
 
 class BNF {
     private static final ThreadLocal<BNF> context = new ThreadLocal<BNF>()
