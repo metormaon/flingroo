@@ -1,9 +1,7 @@
 package il.ac.technion.cs.flingroo.ebnf
 
 import il.ac.technion.cs.flingroo.ebnf.element.Rule
-import il.ac.technion.cs.flingroo.ebnf.element.RuleElement
 import il.ac.technion.cs.flingroo.ebnf.element.Variable
-import il.ac.technion.cs.flingroo.ebnf.element.ZeroOrMore
 
 /**
  * @author Noam Rotem
@@ -13,15 +11,20 @@ class EBNF {
 
     private EBNF() {}
 
-    private final Set<Rule> rules = []
+    final Set<Rule> rules = []
 
     Variable root
 
-    private static Variable findRoot(EBNF ebnf) {
-        null
-    }
-
     static Rule add(Rule r) {
+        if (!context.get()) {
+            throw new IllegalStateException("Rules must be specified in the context of EBNF grammar. " +
+                    "Wrap with ebnf { }.")
+        }
+
+        if (context.get().rules.empty) {
+            context.get().root = r.variable
+        }
+
         context.get().rules.add(r)
         r
     }
@@ -36,7 +39,6 @@ class EBNF {
 
     static EBNF ebnf(Closure c) {
         EBNF ebnf = process c
-        ebnf.root = findRoot ebnf
         ebnf
     }
 
@@ -49,5 +51,15 @@ class EBNF {
     @Override
     String toString() {
         return rules.collect{it.toString()}.join("\n")
+    }
+
+    enum Vars implements Variable {A, B}
+
+    static void main(String[] args) {
+        EBNF grammar = ebnf {
+            Vars.A >> Vars.B | {Vars.B} & Vars.A
+        }
+
+        assert grammar.rules == [] as Set<Rule>
     }
 }

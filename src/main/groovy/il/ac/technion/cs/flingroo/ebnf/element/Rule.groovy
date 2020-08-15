@@ -1,9 +1,10 @@
 package il.ac.technion.cs.flingroo.ebnf.element
+
 /**
  * @author Noam Rotem
  */
 class Rule {
-    private final Variable variable
+    final Variable variable
     private final List<RuleOption> options = []
 
     Rule(Variable v, RuleElement e) {
@@ -23,14 +24,38 @@ class Rule {
         this
     }
 
-    Rule and(Closure<RuleElement> c) {
-        RuleElement e = c()
-        options.last().add(new ZeroOrMore(e))
+    Rule and(Closure<?> c) {
+        Object o = c()
+
+        if (o instanceof RuleElement) {
+            options.last().add(new ZeroOrMore(o))
+        } else if (o instanceof AndList) {
+            options.last().add(new ZeroOrMore((o as AndList).getElements()))
+        } else throw new RuntimeException("Illegal closure type")
+
         this
     }
 
-    Rule and(List<RuleElement> l) {
-        options.last().add(new ZeroOrOne(l[0]))
+    Rule and(List<?> l) {
+        if (l.size() != 1) {
+            throw new RuntimeException("Illegal list length")
+        }
+
+        Object l1 = l[0]
+
+        if (l1 instanceof RuleElement) {
+            options.last().add(new ZeroOrOne(l1 as RuleElement))
+        } else if (l1 instanceof String) {
+            options.last().add(new ZeroOrOne(new ExplicitToken(l1 as String)))
+        } else if (l1 instanceof AndList) {
+            options.last().add(new ZeroOrOne((l1 as AndList).getElements()))
+        } else throw new RuntimeException("Illegal list element type")
+
+        this
+    }
+
+    Rule and(String s) {
+        options.last().add(new ExplicitToken(s))
         this
     }
 
@@ -51,6 +76,11 @@ class Rule {
 
     Rule or(List<RuleElement> l) {
         options.add(new RuleOption(new ZeroOrOne(l[0])))
+        this
+    }
+
+    Rule or(String s) {
+        options.add(new RuleOption(new ExplicitToken(s)))
         this
     }
 

@@ -8,37 +8,21 @@ trait RuleElement {
         new AndList(this, e)
     }
 
-    AndList and(Closure<RuleElement> c) {
-        RuleElement e = c()
-        new AndList(this, new ZeroOrMore(e))
+    AndList and(Closure<?> c) {
+        Object o = c()
+
+        if (o instanceof RuleElement) {
+            new AndList(this, new ZeroOrMore(o))
+        } else if (o instanceof AndList) {
+            new AndList(this, new ZeroOrMore(o.getElements()))
+        } else throw new RuntimeException("Illegal closure type")
     }
 
     AndList and(List<RuleElement> l) {
         new AndList(this, new ZeroOrOne(l[0]))
     }
 
-//    RuleElement getAt(RuleElement e) {
-//        return e
-//    }
-//
-//    RuleElement and(RuleElement e) {
-//        return e
-//    }
-//
-//    RuleElement and(Closure<RuleElement> ce) {
-//        return ce()
-//    }
-//
-//    RuleElement and(List<RuleElement> le) {
-//        return le[0]
-//    }
-//
-//    RuleElement or(Closure<RuleElement> ce) {
-//        return ce()
-//    }
-//
-//
-//    RuleElement or(List<RuleElement> le) {
-//        return le[0]
-//    }
+    AndList and(String s) {
+        new AndList(this, new ExplicitToken(s))
+    }
 }

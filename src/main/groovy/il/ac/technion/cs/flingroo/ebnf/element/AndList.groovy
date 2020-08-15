@@ -9,6 +9,12 @@ class AndList {
 
     AndList(RuleElement...e) {
         elements.addAll(e)
+        this
+    }
+
+    AndList(List<RuleElement> l) {
+        elements.addAll(l)
+        this
     }
 
     AndList and(RuleElement e) {
@@ -16,14 +22,38 @@ class AndList {
         this
     }
 
-    AndList and(Closure<RuleElement> c) {
-        RuleElement e = c()
-        elements.add(new ZeroOrMore(e))
+    AndList and(Closure<?> c) {
+        Object o = c()
+
+        if (o instanceof RuleElement) {
+            elements.add(new ZeroOrMore(o))
+        } else if (o instanceof AndList) {
+            elements.add(new ZeroOrMore((o as AndList).getElements()))
+        } else throw new RuntimeException("Illegal closure type")
+
         this
     }
 
-    AndList and(List<RuleElement> l) {
-        elements.add(new ZeroOrOne(l[0]))
+    AndList and(List<?> l) {
+        if (l.size() != 1) {
+            throw new RuntimeException("Illegal list length")
+        }
+
+        Object l1 = l[0]
+
+        if (l1 instanceof RuleElement) {
+            elements.add(new ZeroOrOne(l1 as RuleElement))
+        } else if (l1 instanceof String) {
+            elements.add(new ZeroOrOne(new ExplicitToken(l1 as String)))
+        } else if (l1 instanceof AndList) {
+            elements.add(new ZeroOrOne((l1 as AndList).getElements()))
+        } else throw new RuntimeException("Illegal list element type")
+
+        this
+    }
+
+    AndList and(String s) {
+        elements.add(new ExplicitToken(s))
         this
     }
 }
