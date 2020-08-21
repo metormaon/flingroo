@@ -23,6 +23,6 @@ trait RuleElement {
     }
 
     AndList and(String s) {
-        new AndList(this, new ExplicitToken(s))
+        new AndList(this, new Token(s))
     }
 }

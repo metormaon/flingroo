@@ -55,9 +55,6 @@ class JavaEbnf {
 
     static void main(String[] args) {
         EBNF java = ebnf {
-            Variable a = Type
-            Identifier >> a
-
             Identifier >> IdentifierChars //but not a Keyword or BooleanLiteral or NullLiteral
 
             IdentifierChars >> JavaLetter & { JavaLetterOrDigit }

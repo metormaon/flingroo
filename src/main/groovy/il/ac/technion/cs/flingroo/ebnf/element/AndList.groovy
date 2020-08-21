@@ -44,7 +44,7 @@ class AndList {
         if (l1 instanceof RuleElement) {
             elements.add(new ZeroOrOne(l1 as RuleElement))
         } else if (l1 instanceof String) {
-            elements.add(new ZeroOrOne(new ExplicitToken(l1 as String)))
+            elements.add(new ZeroOrOne(new Token(l1 as String)))
         } else if (l1 instanceof AndList) {
             elements.add(new ZeroOrOne((l1 as AndList).getElements()))
         } else throw new RuntimeException("Illegal list element type")
@@ -53,7 +53,7 @@ class AndList {
     }
 
     AndList and(String s) {
-        elements.add(new ExplicitToken(s))
+        elements.add(new Token(s))
         this
     }
 }

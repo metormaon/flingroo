@@ -20,6 +20,6 @@ trait Variable extends LabeledRuleElement {
     }
 
     Rule rightShift(String s) {
-        EBNF.add(new Rule(this, new ExplicitToken(s)))
+        EBNF.add(new Rule(this, new Token(s)))
     }
 }

@@ -46,7 +46,7 @@ class Rule {
         if (l1 instanceof RuleElement) {
             options.last().add(new ZeroOrOne(l1 as RuleElement))
         } else if (l1 instanceof String) {
-            options.last().add(new ZeroOrOne(new ExplicitToken(l1 as String)))
+            options.last().add(new ZeroOrOne(new Token(l1 as String)))
         } else if (l1 instanceof AndList) {
             options.last().add(new ZeroOrOne((l1 as AndList).getElements()))
         } else throw new RuntimeException("Illegal list element type")
@@ -55,7 +55,7 @@ class Rule {
     }
 
     Rule and(String s) {
-        options.last().add(new ExplicitToken(s))
+        options.last().add(new Token(s))
         this
     }
 
@@ -80,7 +80,7 @@ class Rule {
     }
 
     Rule or(String s) {
-        options.add(new RuleOption(new ExplicitToken(s)))
+        options.add(new RuleOption(new Token(s)))
         this
     }
 
