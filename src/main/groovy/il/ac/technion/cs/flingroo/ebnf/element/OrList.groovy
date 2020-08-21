@@ -3,7 +3,7 @@ package il.ac.technion.cs.flingroo.ebnf.element
 /**
  * @author Noam Rotem
  */
-class OrList {
+class OrList implements RuleElement {
     @Delegate
     List<RuleElement> elements = []
 
@@ -24,5 +24,10 @@ class OrList {
     OrList or(List<RuleElement> l) {
         elements.add(new ZeroOrOne(l[0]))
         this
+    }
+
+    @Override
+    String toString() {
+        "(" + elements.collect{it.toString()}.join(" | ") + ")"
     }
 }

@@ -51,7 +51,10 @@ class JavaEbnf {
     ConditionalOrExpression, ConditionalAndExpression, InclusiveOrExpression, ExclusiveOrExpression, AndExpression,
     EqualityExpression, RelationalExpression, ShiftExpression, AdditiveExpression, MultiplicativeExpression,
     UnaryExpression, UnaryExpressionNotPlusMinus, PostfixExpression, CastExpression, SwitchExpression,
-    ConstantExpression}
+    ConstantExpression,
+
+
+    PrimitiveType1}
 
     static void main(String[] args) {
         EBNF java = ebnf {

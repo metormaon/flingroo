@@ -19,6 +19,11 @@ class Rule {
         this
     }
 
+    Rule and(OrList l) {
+        options.last().add(l)
+        this
+    }
+
     Rule and(RuleElement e) {
         options.last().add(e)
         this

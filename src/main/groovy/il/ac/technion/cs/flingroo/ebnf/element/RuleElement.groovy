@@ -25,4 +25,12 @@ trait RuleElement {
     AndList and(String s) {
         new AndList(this, new Token(s))
     }
+
+    OrList or(RuleElement e) {
+        new OrList(this, e)
+    }
+
+    OrList or(String s) {
+        new OrList(this, new Token(s))
+    }
 }
